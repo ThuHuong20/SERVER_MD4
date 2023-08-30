@@ -8,20 +8,16 @@ generator client {
 }
 
 model users {
-    id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    email    String    @unique
-    userName String?
-    password String?
-    avatar   String
-    isActive Boolean   @default(true)
-    createAt DateTime  @default(now())
-    updateAt DateTime  @default(now())
-    address  Address[]
-}
-
-model tests {
-    id    String @id @default(auto()) @map("_id") @db.ObjectId
-    title String
+    id           String    @id @default(auto()) @map("_id") @db.ObjectId
+    email        String    @unique
+    emailComfirm Boolean   @default(false)
+    userName     String    @unique
+    password     String
+    avatar       String    @default("https://www.slotcharter.net/wp-content/uploads/2020/02/no-avatar.png")
+    isActive     Boolean   @default(true)
+    createAt     DateTime  @default(now())
+    updateAt     DateTime  @default(now())
+    address      Address[]
 }
 
 type Address {

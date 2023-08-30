@@ -14,6 +14,39 @@ server.use(cors());
 import bodyParser from 'body-parser';
 server.use(bodyParser.json());
 
+import MailServer, { templates, templatess } from './services/mail'
+
+
+server.use("/test", async (req, res) => {
+    let resuslt = await MailServer.sendMail({
+        to: "huong210720@gmail.com",
+        subject: "Xác thực email",
+        html: templates.emailConfirm({
+            productName: 'Huong Store',
+            productWebUrl: 'https://pokemoninmylife.com/',
+            receiverName: 'Người Dùng Mới',
+            confirmLink: 'abc.xyz',
+            language: String(req.headers.language)
+        })
+    })
+
+    console.log("resuslt", resuslt)
+})
+server.use("/tests", async (req, res) => {
+    let resuslt = await MailServer.sendMail({
+        to: "thu376897@gmail.com",
+        subject: "Thử Template password",
+        html: templatess.passwordComfirm({
+            productName: 'Huong Store',
+            productWebUrl: 'https://pokemoninmylife.com/',
+            receiverName: 'Người Dùng Mới',
+            confirmLink: 'abc.xyz'
+        })
+    })
+
+    console.log("resuslt", resuslt)
+})
+
 // import { PrismaClient } from '@prisma/client'
 // const prisma = new PrismaClient()
 // import { Request, Response } from 'express';
