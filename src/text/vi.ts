@@ -15,7 +15,9 @@ const data: TextType = {
     controllerErr: "Lỗi Controller",
     userNameDuplicate: "Tài khoản đã tồn tại",
     emailNameDuplicate: "Email đã tồn tại",
-    registerSucsess: "Đăng kí thành công"
+    registerSucsess: "Đăng kí thành công",
+    /* middlewares */
+    ipAcceptDenine: "Địa chỉ IP không được chấp nhận"
 }
 
 export default data

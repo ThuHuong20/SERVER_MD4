@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
-import text from '../text'
+
 export type Address = {
     provinceId: number
     provinceName: string
