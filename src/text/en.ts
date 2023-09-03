@@ -15,7 +15,11 @@ const data = {
     emailNameDuplicate: "Emailname already exists",
     registerSucsess: "Register Sucssess",
     /* Middleware */
-    ipAcceptDenine: "IP Address Not Accept"
+    ipAcceptDenine: "IP Address Not Accept",
+    /* login */
+    notexist: "User does not exist",
+    Logged: "Logged in successfully",
+    password: "Incorrect password",
 }
 export type TextType = typeof data;
 export default data

@@ -1,5 +1,6 @@
 import en from './en'
 import vi from './vi'
+import ja from './ja'
 import { TextType } from './en'
 
 
@@ -11,6 +12,9 @@ export default (lang: string) => {
             break
         case 'vi':
             text = vi;
+            break
+        case 'ja':
+            text = ja;
             break
         default:
             text = en

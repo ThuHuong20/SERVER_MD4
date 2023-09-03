@@ -17,7 +17,11 @@ const data: TextType = {
     emailNameDuplicate: "Email đã tồn tại",
     registerSucsess: "Đăng kí thành công",
     /* middlewares */
-    ipAcceptDenine: "Địa chỉ IP không được chấp nhận"
+    ipAcceptDenine: "Địa chỉ IP không được chấp nhận",
+    /* login */
+    notexist: "Người dùng không tồn tại",
+    Logged: "Đăng nhập thành công",
+    password: "Mật khẩu không chính xác",
 }
 
 export default data
