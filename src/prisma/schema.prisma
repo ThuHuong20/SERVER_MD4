@@ -15,6 +15,7 @@ model users {
     password     String
     avatar       String    @default("https://www.slotcharter.net/wp-content/uploads/2020/02/no-avatar.png")
     isActive     Boolean   @default(true)
+    isAdmin      Boolean   @default(false)
     createAt     DateTime  @default(now())
     updateAt     DateTime  @default(now())
     address      Address[]
@@ -29,4 +30,30 @@ type Address {
     wardName     String
     title        String
     id           String
+}
+
+model categories {
+    id       String     @id @default(auto()) @map("_id") @db.ObjectId
+    title    String     @unique
+    active   Boolean    @default(false)
+    avatar   String     @default("https://www.slotcharter.net/wp-content/uploads/2020/02/no-avatar.png")
+    products products[]
+}
+
+model products {
+    id              String            @id @default(auto()) @map("_id") @db.ObjectId
+    name            String
+    avatar          String            @default("https://www.slotcharter.net/wp-content/uploads/2020/02/no-avatar.png")
+    price           Float?
+    des             String
+    categories      categories?       @relation(fields: [categoryId], references: [id])
+    categoryId      String?           @db.ObjectId
+    productPictures productPictures[]
+}
+
+model productPictures {
+    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    path      String
+    productId String?   @db.ObjectId
+    products  products? @relation(fields: [productId], references: [id])
 }

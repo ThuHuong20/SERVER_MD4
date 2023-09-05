@@ -16,10 +16,13 @@ server.use(cors());
 import bodyParser from 'body-parser';
 server.use(bodyParser.json());
 
+
 /* Version api setup */
 import routeApi from './apis'
 import guard from './middlewares/guard';
 server.use('/api', guard.ipAuthen, routeApi)
+
+
 
 /* day server ra port tren may */
 server.listen(process.env.SERVER_PORT, () => {
