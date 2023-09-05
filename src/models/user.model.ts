@@ -22,12 +22,12 @@ export interface NewUsers {
 }
 export interface UpdateUser {
     email?: string,
-    userName?: string,
+    emailComfirm: boolean,
     password?: string,
+    userName?: string,
     avatar?: string,
     createAt?: Date,
     updateAt: Date,
-    emailComfirm: boolean,
     isActive: boolean,
     address?: Address[]
 }
@@ -127,12 +127,45 @@ export default {
                 }
             })
 
+            if (!user) {
+                return {
+                    status: false,
+                    message: "Tên đăng nhập không tồn tại"
+                }
+            }
+
             return {
                 status: true,
                 data: user,
                 message: "Lấy thông tin thành công!"
             }
         } catch (err) {
+            console.log("err", err);
+
+            let message: string = "modelErr";
+            return {
+                status: false,
+                data: null,
+                message
+            }
+        }
+    },
+    findByEmail: async function (email: string) {
+        try {
+            let user = await prisma.users.findUnique({
+                where: {
+                    email
+                }
+            })
+
+            return {
+                status: true,
+                data: user,
+                message: "Lấy thông tin thành công!"
+            }
+        } catch (err) {
+            console.log("err", err);
+
             let message: string = "modelErr";
             return {
                 status: false,

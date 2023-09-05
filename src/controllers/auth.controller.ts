@@ -13,7 +13,7 @@ export default {
                 if (modelRes.status) {
                     let modelUpdateRes = await userModel.update(modelRes.data?.id!, {
                         emailComfirm: true, updateAt: new Date(Date.now()),
-                        isActive: false
+                        isActive: true
                     })
                     return res
                         .status(modelUpdateRes.status ? 200 : 213)

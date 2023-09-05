@@ -60,7 +60,7 @@ export default {
                     token: jwt.createToken(modelRes.data, "1d")
                 });
             }
-            return res.status(modelRes.status ? 200 : 213).json({
+            return res.status(213).json({
                 message: Text(String(req.headers.language)).notexist
             });
         } catch (err) {

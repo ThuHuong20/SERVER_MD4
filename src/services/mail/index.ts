@@ -35,7 +35,6 @@ export default {
 
             return true
         } catch (err) {
-            console.log("🚀 ~ file: index.ts:31 ~ sendMail: ~ err:", err)
             return false
         }
     }
