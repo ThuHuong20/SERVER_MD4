@@ -14,4 +14,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 Router.post('/', upload.array('imgs'), productController.create)
+Router.get('/:id', productController.findById);
+//Router.get("/", productController.findAllProduct);
+Router.get("/", productController.findMany);
+
+
+
 export default Router;

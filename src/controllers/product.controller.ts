@@ -1,70 +1,84 @@
 import productModel from "../models/product.model";
 import { Request, Response } from "express";
-import { uploadFileToStorage } from '../meobase';
-import fs from 'fs';
-
+import { uploadFileToStorage } from '../firebase'
+import fs from 'fs'
 export default {
     create: async function (req: Request, res: Response) {
-        console.log("req", req.body);
-        console.log("files", req.files);
+        let data = JSON.parse(req.body.product);
+        data.price = Number(data.price)
+        let newProduct = {
+            ...data,
+            // avatar: "abc.jpg"
+        }
 
+        if (req.files) {
+            let avatarUrl = await uploadFileToStorage((req.files as any)[0], "md4", fs.readFileSync((req.files as any)[0].path))
+            fs.unlink((req.files as any)[0].path, (err) => {
+
+            })
+            newProduct.avatar = avatarUrl
+        }
+        let productPictures = [];
+        for (let i = 1; Number(i) < Number(req.files?.length); i++) {
+            console.log("(req.files as any)[i]", (req.files as any)[i])
+            let path = await uploadFileToStorage((req.files as any)[i], "md4", fs.readFileSync((req.files as any)[i].path))
+            fs.unlink((req.files as any)[i].path, (err) => {
+
+            })
+            productPictures.push({
+                path
+            })
+        }
         try {
-            // Parse the product data from req.body.product
-            const productData = JSON.parse(req.body.product);
-
-            // Initialize an empty array to store productPictures URLs
-            const productPictures = [];
-
-            // Handle avatar upload if available
-            if (req.files && Array.isArray(req.files) && req.files.length > 1) {
-                const avatarFile = req.files[0];
-                const avatarPath = `products/${avatarFile.filename}`;
-                // Read the avatar file into a buffer
-                const avatarBuffer = fs.readFileSync(avatarFile.path);
-                // Upload avatar to storage
-                await uploadFileToStorage(avatarFile, avatarBuffer, avatarPath);
-
-                // Update the newProduct object with the avatar URL
-                productData.avatar = avatarPath;
-
-                // Delete the temporary local avatar file
-                fs.unlinkSync(avatarFile.path);
-            }
-
-            // Handle productPictures upload if available
-            if (req.files && Array.isArray(req.files) && req.files.length > 1) {
-                for (let i = 1; i < req.files.length; i++) {
-                    const pictureFile = req.files[i];
-                    const picturePath = `products/${pictureFile.filename}`;
-
-                    // Read the picture file into a buffer
-                    const pictureBuffer = fs.readFileSync(pictureFile.path);
-
-                    // Upload product picture to storage
-                    await uploadFileToStorage(pictureFile, picturePath, pictureBuffer);
-
-                    // Add the picture URL to the productPictures array
-                    productPictures.push(picturePath);
-
-                    // Delete the temporary local picture file
-                    fs.unlinkSync(pictureFile.path);
-                }
-            }
-
-            // Update the newProduct object with productPictures
-            productData.productPictures = productPictures;
-
-            console.log("newProduct", productData);
-
-            // Call productModel.create() with the updated productData object
-            const modelRes = await productModel.create(productData, productPictures);
-
+            let modelRes = await productModel.create(newProduct, productPictures);
+            console.log("modelRes", modelRes)
             return res.status(modelRes.status ? 200 : 213).json(modelRes);
         } catch (err) {
-            // console.error("Error:", err);
             return res.status(500).json({
                 message: "Lỗi controller"
-            });
+            })
         }
-    }
+    },
+    findById: async function (req: Request, res: Response) {
+        try {
+            let result = await productModel.findById(req.params.id);
+            return res.status(200).json({
+                message: result.message,
+                data: result.data
+            })
+
+        } catch (err) {
+            return res.status(500).json({
+                message: "Lỗi không xác định controller!"
+            })
+        }
+    },
+
+    /* phan trang */
+    findMany: async function (req: Request, res: Response) {
+        try {
+            let maxItemPage = Number(req.query.maxItemPage);
+            let skipItem = Number(req.query.skipItem);
+            let modelRes = await productModel.findMany(maxItemPage, skipItem)
+
+            return res.status(modelRes.status ? 200 : 221).json(modelRes)
+        } catch (err) {
+
+            return res.status(500).json({
+                message: "Lỗi không xác định findMany!"
+            })
+        }
+    },
+    // findAllProduct: async function (req: Request, res: Response) {
+    //     try {
+    //         /* Find all */
+    //         let modelRes = await productModel.findAllProduct()
+    //         return res.status(modelRes.status ? 200 : 221).json(modelRes)
+    //     } catch (err) {
+    //         return res.status(500).json({
+    //             message: "Lỗi không xác định!"
+    //         })
+    //     }
+    // },
+
 }

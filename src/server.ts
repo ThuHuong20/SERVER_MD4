@@ -16,11 +16,26 @@ server.use(cors());
 import bodyParser from 'body-parser';
 server.use(bodyParser.json());
 
+import path from 'path'
+server.set('view engine', 'ejs'); // Thiết lập EJS là công cụ mẫu
+server.set('views', path.join(__dirname, 'templates')); // Đặt thư mục chứa các tệp mẫu EJS
+
+server.get('/emailActived', (req, res) => {
+    const langData = {
+        SuccessRegister: "Đăng ký thành công",
+        Activated: "Đã kích hoạt",
+        GoLogin: "Đăng nhập"
+        // Thêm các dữ liệu khác tùy theo trang EJS của bạn
+    };
+
+    res.render('emailActived', { langData });
+});
 
 /* Version api setup */
 import routeApi from './apis'
 import guard from './middlewares/guard';
 server.use('/api', guard.ipAuthen, routeApi)
+
 
 
 

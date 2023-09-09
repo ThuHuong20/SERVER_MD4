@@ -2,9 +2,8 @@ import { TextType } from "./en";
 const data = {
     /* Mail */
     hello: "こんにちは",
-    receiverName: "ユーザー名",
     signature: "良い一日を",
-    intro: `${process.env.APP_NAME} コミュニティへのご参加、ありがとうございます！私たちはとても嬉しいです！`,
+    intro: `Cake Run コミュニティへのご参加、ありがとうございます！私たちはとても嬉しいです！`,
     instructionOne: "アカウントのメールを確認するには、",
     instructionTwo: " 以下のリンクをクリックしてください：",
     mailBtnText: "メールを確認する",
@@ -21,5 +20,9 @@ const data = {
     notexist: "ユーザーが存在しません",
     Logged: "ログインに成功しました",
     password: "パスワードが正しくありません",
+    /* emailActived */
+    SuccessRegister: "登録成功",
+    Activated: "アクティブ化",
+    GoLogin: "ログインへ進む",
 }
 export default data

@@ -21,10 +21,10 @@ function genEmailString(mailBody: MailBody) {
         body: {
             greeting: Text(mailBody.language).hello,
             signature: Text(mailBody.language).signature,
-            name: Text(mailBody.language).receiverName,
+            name: mailBody.receiverName,
             intro: Text(mailBody.language).intro,
             action: {
-                instructions: `${Text(mailBody.language).instructionOne} ${mailBody.productName}, ${Text(mailBody.language).instructionTwo}`,
+                instructions: `${Text(mailBody.language).instructionOne}, ${Text(mailBody.language).instructionTwo}`,
                 button: {
                     color: '#22BC66',
                     text: Text(mailBody.language).mailBtnText,

@@ -1,9 +1,8 @@
 const data = {
     /* Mail */
     hello: "Hi",
-    receiverName: "User Name",
     signature: "Have a good day",
-    intro: `Thank you for joining the community ${process.env.APP_NAME}! We are very happy about that!`,
+    intro: `Thank you for joining the community Cake Run! We are very happy about that!`,
     instructionOne: "To verify the email for the account ",
     instructionTwo: " please click on the link below:",
     mailBtnText: "Confirm email",
@@ -20,6 +19,10 @@ const data = {
     notexist: "User does not exist",
     Logged: "Logged in successfully",
     password: "Incorrect password",
+    /* emailActived */
+    SuccessRegister: "Success Register",
+    Activated: "Activated",
+    GoLogin: "Go Login",
 }
 export type TextType = typeof data;
 export default data

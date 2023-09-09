@@ -4,6 +4,8 @@ import Text from '../text'
 import mail, { templates } from "../services/mail";
 import jwt from "../services/jwt";
 import bcrypt from 'bcrypt'
+
+
 export default {
     register: async function (req: Request, res: Response) {
         try {
@@ -15,9 +17,7 @@ export default {
                 updateAt: new Date(Date.now()),
             }
             let modelRes = await userModel.register(newUser);
-
             modelRes.message = (Text(String(req.headers.language)) as any)[modelRes.message];
-
             /* Mail */
             if (modelRes.status) {
                 mail.sendMail({
@@ -31,6 +31,7 @@ export default {
                         receiverName: modelRes.data?.userName || ''
                     })
                 })
+
             }
 
             return res.status(modelRes.status ? 200 : 213).json(modelRes);

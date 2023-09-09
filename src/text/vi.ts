@@ -4,8 +4,7 @@ const data: TextType = {
     /* Mail */
     signature: "Chúc bạn một ngày tốt lành",
     hello: "Xin Chào",
-    receiverName: "nguoi dung moi",
-    intro: `Cảm ơn bạn đã tham gia cộng đồng ${process.env.APP_NAME}! Chúng tôi rất vui vì điều đó!`,
+    intro: `Cảm ơn bạn đã tham gia cộng đồng Cake Run! Chúng tôi rất vui vì điều đó!`,
     instructionOne: "Để xác thực email cho tài khoản ",
     instructionTwo: " vui lòng bấm vào liên kết bên dưới:",
     mailBtnText: "Xác thực email",
@@ -22,6 +21,10 @@ const data: TextType = {
     notexist: "Người dùng không tồn tại",
     Logged: "Đăng nhập thành công",
     password: "Mật khẩu không chính xác",
+    /* emailActived */
+    SuccessRegister: "Đăng ký thành công",
+    Activated: "Đã kích hoạt",
+    GoLogin: "Đăng nhập"
 }
 
 export default data
