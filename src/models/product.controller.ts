@@ -57,9 +57,18 @@ export default {
     /* phan trang */
     findMany: async function (req: Request, res: Response) {
         try {
+            // if (req.body) {
+            //     let modelRes = await productModel.findManyProduct();
+            //     return res.status(modelRes.status ? 200 : 221).json(modelRes)
+            // }
             let maxItemPage = Number(req.query.maxItemPage);
             let skipItem = Number(req.query.skipItem);
             let modelRes = await productModel.findMany(maxItemPage, skipItem)
+
+            if (req.query.search) {
+                let modelRes = await productModel.findProductByName(req.query.search)
+                return res.status(modelRes.status ? 200 : 221).json(modelRes)
+            }
 
             return res.status(modelRes.status ? 200 : 221).json(modelRes)
         } catch (err) {
@@ -69,10 +78,12 @@ export default {
             })
         }
     },
-    // findAllProduct: async function (req: Request, res: Response) {
+
+    // findManyProduct: async function (req: Request, res: Response) {
     //     try {
+
     //         /* Find all */
-    //         let modelRes = await productModel.findAllProduct()
+    //         let modelRes = await productModel.findManyProduct()
     //         return res.status(modelRes.status ? 200 : 221).json(modelRes)
     //     } catch (err) {
     //         return res.status(500).json({
@@ -80,5 +91,27 @@ export default {
     //         })
     //     }
     // },
+    update: async (req: Request, res: Response) => {
+
+        req.body = JSON.parse(req.body.product_infor);
+        console.log("req.body", req.body);
+        console.log("req.params.productId", req.params.productId);
+        // xử lý avatar
+        if (req.file != undefined) {
+            let url = await uploadFileToStorage(req.file, "md4", fs.readFileSync(req.file.path));
+            fs.unlink(req.file.path, (err) => { })
+            req.body.avatar = url;
+        }
+        try {
+            /* Gọi model xử lý database */
+            let result = await productModel.update(req.params.productId, req.body);
+            return res.status(result.status ? 200 : 214).json(result)
+            // console.log("result", result)
+        } catch (err) {
+            return res.status(500).json({
+                message: "Lỗi xử lý!"
+            })
+        }
+    }
 
 }

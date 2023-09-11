@@ -6,13 +6,13 @@ export interface MailOption {
     html?: string, // Template HTML
     text?: string // Văn Bản
 }
-import emailConfirm from './templates/emailComfirm'
+import emailConfirm from './templates/emailComfirm';
+import sendOtp from './templates/sendOtp'
+import reportReceiptTemplate from './templates/reportReceipts';
 export const templates = {
-    emailConfirm: emailConfirm
-}
-import passwordComfirm from './templates/passwordComfirm'
-export const templatess = {
-    passwordComfirm: passwordComfirm
+    emailConfirm: emailConfirm,
+    sendOtp,
+    reportReceiptTemplate
 }
 export default {
     sendMail: async (mailOption: MailOption) => {
@@ -37,5 +37,15 @@ export default {
         } catch (err) {
             return false
         }
+    }
+    ,
+    sendMailMessage: async function (to: string, subject: string, message: string) {
+        let mailOptions = {
+            to,
+            subject: "Organic of message: " + subject,
+            html: message
+        }
+
+        return await this.sendMail(mailOptions);
     }
 }

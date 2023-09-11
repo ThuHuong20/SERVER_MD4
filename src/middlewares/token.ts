@@ -16,5 +16,29 @@ export default {
         return res.status(213).json({
             message: "Token không chính xác"
         })
+    },
+    isAdmin: async function (req: Request, res: Response, next: NextFunction) {
+        let token: string = req.params.token ? String(req.params.token) : String(req.headers.token);
+        let tokenObj = jwt.verifyToken(token);
+        if (tokenObj) {
+            let modelRes = await userModel.inforById((tokenObj as any).id);
+            if (modelRes.status) {
+                if (new Date(modelRes.data?.updateAt!).toDateString() != new Date((tokenObj as any).updateAt).toDateString()) {
+                    return res.status(213).json({
+                        message: "Token không chính xác"
+                    })
+                }
+                if ((tokenObj as any).isAdmin == true) {
+                    return next();
+                } else {
+                    return res.status(213).json({
+                        message: "Bạn phải là quản trị viên!"
+                    })
+                }
+            }
+        }
+        return res.status(213).json({
+            message: "Token không chính xác"
+        })
     }
 }

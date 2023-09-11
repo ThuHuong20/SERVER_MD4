@@ -26,7 +26,6 @@ export default {
                 data: product
             }
         } catch (err) {
-            console.log("🚀 ~ file: product.model.ts:29 ~ err:", err)
             return {
                 status: false,
                 message: "Lỗi model",
@@ -49,7 +48,6 @@ export default {
                 data: product
             }
         } catch (err) {
-            console.log(" err:", err)
             return {
                 status: false,
                 message: "Lỗi không xác định findbyid!"
@@ -72,29 +70,94 @@ export default {
                 data: products,
             }
         } catch (err) {
-            console.log("🚀 ~ file: product.model.ts:72 ~ err:", err)
             return {
                 status: false,
                 message: "lỗi model!"
             }
         }
     },
-    // findAllProduct: async function () {
+
+    /* Search */
+
+    findProductByName: async function (nameString: any) {
+        console.log("name string", String(nameString));
+
+        try {
+            const result = await prisma.products.findMany({
+                where: {
+                    name: {
+                        contains: nameString,
+                        mode: 'insensitive', // Default value: default
+                    }
+                },
+                // include: {
+                //     productPictures: true
+                // }
+            })
+
+
+            return {
+                status: true,
+                message: "findProductByName successfull ! ",
+                data: result
+            }
+
+        } catch (err) {
+            return {
+                status: false,
+                message: "search product that bai "
+            }
+        }
+    },
+    // findManyProduct: async function () {
     //     try {
-    //         let products = await prisma.products.findMany();
+    //         const result = await prisma.products.findMany({
+
+    //             include: {
+    //                 productPictures: true
+    //             }
+    //         })
+    //         console.log("result", result);
+
     //         return {
     //             status: true,
-    //             message: "san pham duoc tim thay!",
-    //             data: products
+    //             message: "findProduct successfull ! ",
+    //             data: result
     //         }
+
     //     } catch (err) {
     //         return {
     //             status: false,
-    //             message: "lỗi!"
+    //             message: "loi model product "
     //         }
     //     }
     // },
-    /* Cart */
 
+    update: async function (productId: any, data: any) {
+        console.log("productId", productId);
+        console.log("data", data);
+        try {
+            const product = await prisma.products.update({
+                where: {
+                    id: productId
+                },
+                data: {
+                    ...data
+                }
+            })
+            return {
+                status: true,
+                message: "Update sản phẩm thành công!",
+                data: product
+            }
+        } catch (err) {
+            console.log("err", err);
+
+            return {
+                status: false,
+                message: "Lỗi không xác định!"
+            }
+        }
+    },
 
 }
