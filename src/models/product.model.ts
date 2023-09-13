@@ -109,29 +109,6 @@ export default {
             }
         }
     },
-    // findManyProduct: async function () {
-    //     try {
-    //         const result = await prisma.products.findMany({
-
-    //             include: {
-    //                 productPictures: true
-    //             }
-    //         })
-    //         console.log("result", result);
-
-    //         return {
-    //             status: true,
-    //             message: "findProduct successfull ! ",
-    //             data: result
-    //         }
-
-    //     } catch (err) {
-    //         return {
-    //             status: false,
-    //             message: "loi model product "
-    //         }
-    //     }
-    // },
 
     update: async function (productId: any, data: any) {
         console.log("productId", productId);

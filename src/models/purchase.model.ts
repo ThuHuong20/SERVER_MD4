@@ -93,35 +93,7 @@ export default {
             }
         }
     },
-    // createUserReceipt: async function (newUserReceipt: NewUserReceipt, userReceiptDetailList: NewUserReceiptDetail[]) {
-    //     try {
-    //         let receipt = await prisma.userReceipts.create({
-    //             data: {
-    //                 ...newUserReceipt,
-    //                 userReceiptDetail: {
-    //                     createMany: {
-    //                         data: userReceiptDetailList
-    //                     }
-    //                 }
-    //             },
-    //             include: {
-    //                 userReceiptDetail: true
-    //             }
-    //         })
-    //         return {
-    //             status: true,
-    //             message: "Order thành công!",
-    //             data: receipt
-    //         }
-    //     } catch (err) {
-    //         console.log("err:", err)
-    //         return {
-    //             status: false,
-    //             message: "Lỗi model!",
-    //             data: null
-    //         }
-    //     }
-    // },
+
     findGuestReceipt: async function (guestEmail: string) {
         try {
             let receipts = await prisma.guestReceipts.findMany({

@@ -39,13 +39,5 @@ export default {
         }
     }
     ,
-    sendMailMessage: async function (to: string, subject: string, message: string) {
-        let mailOptions = {
-            to,
-            subject: "Organic of message: " + subject,
-            html: message
-        }
 
-        return await this.sendMail(mailOptions);
-    }
 }
